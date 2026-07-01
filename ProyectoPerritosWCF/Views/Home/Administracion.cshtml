@@ -1,0 +1,138 @@
+﻿<!--SEMANA 9
+JOSEPH MAURICIO MONDRAGON MORENO
+SISTEMAS COMPUTACIONALES-->
+
+@{
+    ViewBag.Title = "Administración";
+}
+
+<!-- ========================================= -->
+<!-- Panel de Administración                   -->
+<!-- Proyecto CRUD JMMM                        -->
+<!-- ========================================= -->
+
+<h2>Panel de Administración de Usuarios</h2>
+
+<hr />
+
+<table style="width:100%;">
+
+    <tr>
+
+        <!-- ========================================= -->
+        <!-- Formulario CRUD                           -->
+        <!-- ========================================= -->
+
+        <td style="width:40%; vertical-align:top;">
+
+            <h3>Formulario de Usuario</h3>
+
+            <p>
+                <label>ID:</label><br />
+                <input type="text" />
+                <button>Consultar</button>
+            </p>
+
+            <p>
+                <label>Nombre:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Apellido Paterno:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Apellido Materno:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Edad:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Género:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Email:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Confirmación de Email:</label><br />
+                <input type="text" />
+            </p>
+
+            <p>
+                <label>Contraseña:</label><br />
+                <input type="password" />
+            </p>
+
+            <p>
+                <label>Confirmación de Contraseña:</label><br />
+                <input type="password" />
+            </p>
+
+            <br />
+
+            <button>Guardar</button>
+            <button>Actualizar</button>
+            <button>Eliminar</button>
+            <button>Limpiar</button>
+
+        </td>
+
+
+        <!-- ========================================= -->
+        <!-- Información y tabla                       -->
+        <!-- ========================================= -->
+
+        <td style="vertical-align:top;">
+
+            <h3>Movimiento realizado</h3>
+
+            <p>
+                <strong>Movimiento:</strong> _____________________
+                &nbsp;&nbsp;&nbsp;
+
+                <strong>Fecha:</strong> ____________
+                &nbsp;&nbsp;&nbsp;
+
+                <strong>Hora:</strong> ____________
+            </p>
+
+            <hr />
+
+            <h3>Usuarios Registrados</h3>
+
+            <table border="1" style="width:100%; text-align:center;">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido P.</th>
+                    <th>Apellido M.</th>
+                    <th>Edad</th>
+                    <th>Género</th>
+                    <th>Email</th>
+                </tr>
+
+                <tr>
+                    <td colspan="7">
+                        Aquí se mostrarán los registros de la base de datos.
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+
+    </tr>
+
+</table>
+

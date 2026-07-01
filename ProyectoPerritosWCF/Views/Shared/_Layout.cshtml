@@ -1,40 +1,119 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <!-- Configuración de caracteres -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
+
+    <!-- Adaptación para dispositivos móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título dinámico de cada vista -->
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+
+    <!-- Hoja de estilos principal del proyecto -->
     @Styles.Render("~/Content/css")
+
+    <!-- Librería Modernizr -->
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
 <body>
+
+    <!-- Barra de navegación principal -->
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+
         <div class="container">
-            <span class="navbar-brand">SEMANA 8 JMMM</span>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+
+            <!-- Nombre del proyecto -->
+            <span class="navbar-brand">
+                Proyecto CRUD JMMM (SEMANA 9)
+            </span>
+
+            <!-- Botón para navegación en dispositivos móviles -->
+            <button type="button"
+                    class="navbar-toggler"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse"
+                    title="Alternar navegación"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+
                 <span class="navbar-toggler-icon"></span>
+
             </button>
+
+            <!-- Opciones del menú -->
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Documentacion", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    <!-- Página principal (Login) -->
+                    <li>
+                        @Html.ActionLink(
+                            "Inicio",
+                            "Index",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" })
+                    </li>
+
+                    <!-- Vista del consumo de la API Dog CEO -->
+                    <li>
+                        @Html.ActionLink(
+                            "Perritos",
+                            "Perritos",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" })
+                    </li>
+
+                    <!-- Documentación técnica del proyecto -->
+                    <li>
+                        @Html.ActionLink(
+                            "Documentación",
+                            "About",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" })
+                    </li>
 
                 </ul>
+
             </div>
+
         </div>
+
     </nav>
+
+    <!-- Contenido dinámico de cada vista -->
     <div class="container body-content">
+
         @RenderBody()
+
         <hr />
+
+        <!-- Pie de página -->
         <footer>
-            <p>&copy; @DateTime.Now.Year - Joseph Mauricio Mondragon Moreno || Sistemas Computacionales || SCO6MA116</p>
+
+            <p>
+                &copy; @DateTime.Now.Year -
+                Joseph Mauricio Mondragon Moreno ||
+                Sistemas Computacionales ||
+                SCO6MA116
+            </p>
+
         </footer>
+
     </div>
 
+    <!-- Librerías JavaScript -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- Scripts adicionales de las vistas -->
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

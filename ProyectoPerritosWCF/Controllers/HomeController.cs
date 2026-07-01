@@ -1,4 +1,4 @@
-﻿/// SEMANA 8
+﻿/// SEMANA 9
 /// JOSEPH MAURICIO MONDRAGON MORENO
 /// SISTEMAS COMPUTACIONALES
 
@@ -47,7 +47,7 @@ namespace ProyectoPerritosWCF.Controllers
 
             if (usuarioValido)
             {
-                return RedirectToAction("Perritos");
+                return RedirectToAction("Administracion");
             }
 
             ViewBag.MensajeError =
@@ -93,6 +93,14 @@ namespace ProyectoPerritosWCF.Controllers
                     respuestaJson);
 
             return View(perro);
+        }
+
+        /// Panel de Administración.
+        /// Aquí se implementará el sistema CRUD
+        /// para la administración de usuarios.
+        public ActionResult Administracion()
+        {
+            return View();
         }
     }
 }

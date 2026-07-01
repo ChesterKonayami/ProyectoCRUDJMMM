@@ -1,31 +1,48 @@
-﻿// SEMANA 8
+﻿// SEMANA 9
 // JOSEPH MAURICIO MONDRAGON MORENO
 // SISTEMAS COMPUTACIONALES 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using MySql.Data.MySqlClient;
 
 namespace ProyectoPerritosWCF.Data
 {
     public class ConexionBD
     {
-        // Cadena de conexión al servidor externo MySQL 
+        /*
+         * ============================================
+         * CONEXIÓN ORIGINAL (Servidor de la profesora)
+         * ============================================
+         *
+         * Se conserva como referencia para una futura
+         * migración cuando el servidor vuelva a estar
+         * disponible.
+         *
+         * private string cadenaConexion =
+         * "Server=;" +
+         * "Port=;" +
+         * "Database=admin_3;" +
+         * "Uid=cizcalli_3;" +
+         * "Pwd=;";
+         */
+
+
+        // ============================================
+        // CONEXIÓN LOCAL (XAMPP)
+        // ============================================
+
         private string cadenaConexion =
-        "Server=;" +
-        "Port=" +
-        "Database=admin_3;" +
-        "Uid=cizcalli_3;" +
-        "Pwd=;";
+            "Server=localhost;" +
+            "Port=3306;" +
+            "Database=admin_3;" +
+            "Uid=root;" +
+            "Pwd=;";
 
 
         // Método que devuelve una conexión
         public MySqlConnection ObtenerConexion()
         {
-            MySqlConnection conexion = new MySqlConnection(cadenaConexion);
-            return conexion;
+            return new MySqlConnection(cadenaConexion);
         }
 
         public string ProbarConexion()
@@ -46,15 +63,8 @@ namespace ProyectoPerritosWCF.Data
 
         // Valida si existe un usuario con las credenciales
         // recibidas desde el formulario Login.
-        public bool ValidarUsuario(
-            string nombreUsuario,
-            string password)
+        public bool ValidarUsuario(string nombreUsuario, string password)
         {
-
-            //Consulta con la tabla TBL_LOGIN_JMMM para validar el usuario y contraseña
-           
-          
-
             string consulta =
                 "SELECT COUNT(*) " +
                 "FROM TBL_LOGIN_JMMM " +
@@ -66,29 +76,15 @@ namespace ProyectoPerritosWCF.Data
                 conexion.Open();
 
                 MySqlCommand comando =
-                    new MySqlCommand(
-                        consulta,
-                        conexion);
+                    new MySqlCommand(consulta, conexion);
 
-                comando.Parameters.AddWithValue(
-                    "@usuario",
-                    nombreUsuario);
+                comando.Parameters.AddWithValue("@usuario", nombreUsuario);
+                comando.Parameters.AddWithValue("@password", password);
 
-                comando.Parameters.AddWithValue(
-                    "@password",
-                    password);
-
-                int cantidad =
-                    Convert.ToInt32(
-                        comando.ExecuteScalar());
+                int cantidad = Convert.ToInt32(comando.ExecuteScalar());
 
                 return cantidad > 0;
             }
-            
-
-            // Valor temporal mientras el servidor
-            // no esté disponible.
-            //return false;
         }
     }
 }
