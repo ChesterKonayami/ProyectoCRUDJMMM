@@ -188,6 +188,7 @@
     <Compile Include="Services\DogService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App.config" />
     <None Include="Connected Services\DogServiceReference\DogService.wsdl" />
     <None Include="Connected Services\DogServiceReference\item.disco" />
     <None Include="Connected Services\DogServiceReference\configuration91.svcinfo" />
