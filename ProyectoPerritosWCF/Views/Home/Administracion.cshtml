@@ -2,6 +2,7 @@
 JOSEPH MAURICIO MONDRAGON MORENO
 SISTEMAS COMPUTACIONALES-->
 
+@model ProyectoPerritosWCF.Models.AdministracionViewModel
 @{
     ViewBag.Title = "Administración";
 }
@@ -15,124 +16,150 @@ SISTEMAS COMPUTACIONALES-->
 
 <hr />
 
-<table style="width:100%;">
+@using (Html.BeginForm(
+    "Administracion",
+    "Home",
+    FormMethod.Post))
+{
 
-    <tr>
+    <table style="width:100%;">
 
-        <!-- ========================================= -->
-        <!-- Formulario CRUD                           -->
-        <!-- ========================================= -->
+        <tr>
 
-        <td style="width:40%; vertical-align:top;">
+            <!-- ========================================= -->
+            <!-- Formulario CRUD                           -->
+            <!-- ========================================= -->
 
-            <h3>Formulario de Usuario</h3>
+            <td style="width:40%; vertical-align:top;">
 
-            <p>
-                <label>ID:</label><br />
-                <input type="text" />
-                <button>Consultar</button>
-            </p>
+                <h3>Formulario de Usuario</h3>
 
-            <p>
-                <label>Nombre:</label><br />
-                <input type="text" />
-            </p>
+                <p>
+                <p>
+                    <label>ID:</label><br />
 
-            <p>
-                <label>Apellido Paterno:</label><br />
-                <input type="text" />
-            </p>
+                    @Html.TextBoxFor(model => model.Usuario.ID_USUARIO)
 
-            <p>
-                <label>Apellido Materno:</label><br />
-                <input type="text" />
-            </p>
+                    <button type="submit"
+                            name="accion"
+                            value="Consultar">
+                        Consultar
+                    </button>
 
-            <p>
-                <label>Edad:</label><br />
-                <input type="text" />
-            </p>
-
-            <p>
-                <label>Género:</label><br />
-                <input type="text" />
-            </p>
-
-            <p>
-                <label>Email:</label><br />
-                <input type="text" />
-            </p>
-
-            <p>
-                <label>Confirmación de Email:</label><br />
-                <input type="text" />
-            </p>
-
-            <p>
-                <label>Contraseña:</label><br />
-                <input type="password" />
-            </p>
-
-            <p>
-                <label>Confirmación de Contraseña:</label><br />
-                <input type="password" />
-            </p>
-
-            <br />
-
-            <button>Guardar</button>
-            <button>Actualizar</button>
-            <button>Eliminar</button>
-            <button>Limpiar</button>
-
-        </td>
+                </p>
 
 
-        <!-- ========================================= -->
-        <!-- Información y tabla                       -->
-        <!-- ========================================= -->
+                <p>
+                    <label>Nombre:</label><br />
 
-        <td style="vertical-align:top;">
+                    @Html.TextBoxFor(model => model.Usuario.NOMBRE)
 
-            <h3>Movimiento realizado</h3>
+                </p>
 
-            <p>
-                <strong>Movimiento:</strong> _____________________
-                &nbsp;&nbsp;&nbsp;
+                <p>
+                    <label>Apellido Paterno:</label><br />
 
-                <strong>Fecha:</strong> ____________
-                &nbsp;&nbsp;&nbsp;
+                    @Html.TextBoxFor(model => model.Usuario.APELLIDO_PATERNO)
 
-                <strong>Hora:</strong> ____________
-            </p>
+                </p>
 
-            <hr />
+                <p>
+                    <label>Apellido Materno:</label><br />
+                    @Html.TextBoxFor(model => model.Usuario.APELLIDO_MATERNO)
+                </p>
 
-            <h3>Usuarios Registrados</h3>
+                <p>
+                    <label>Edad:</label><br />
+                    @Html.TextBoxFor(model => model.Usuario.EDAD)
+                </p>
 
-            <table border="1" style="width:100%; text-align:center;">
+                <p>
+                    <label>Género:</label><br />
+                    @Html.TextBoxFor(model => model.Usuario.GENERO)
+                </p>
 
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido P.</th>
-                    <th>Apellido M.</th>
-                    <th>Edad</th>
-                    <th>Género</th>
-                    <th>Email</th>
-                </tr>
+                <p>
+                    <label>Email:</label><br />
+                    @Html.TextBoxFor(model => model.Usuario.EMAIL)
+                </p>
 
-                <tr>
-                    <td colspan="7">
-                        Aquí se mostrarán los registros de la base de datos.
-                    </td>
-                </tr>
+                <p>
+                    <label>Confirmación de Email:</label><br />
+                    <input type="text" />
+                </p>
 
-            </table>
+                <p>
+                    <label>Contraseña:</label><br />
+                    @Html.TextBoxFor(model => model.Usuario.PASSWORD)
+                </p>
 
-        </td>
+                <p>
+                    <label>Confirmación de Contraseña:</label><br />
+                    <input type="password" />
+                </p>
 
-    </tr>
+                <br />
 
-</table>
+                <button>Guardar</button>
+                <button>Actualizar</button>
+                <button>Eliminar</button>
+                <button>Limpiar</button>
 
+            </td>
+
+
+            <!-- ========================================= -->
+            <!-- Información y tabla                       -->
+            <!-- ========================================= -->
+
+            <td style="vertical-align:top;">
+
+                <h3>Movimiento realizado</h3>
+
+                <p>
+                    <strong>Movimiento:</strong> _____________________
+                    &nbsp;&nbsp;&nbsp;
+
+                    <strong>Fecha:</strong> ____________
+                    &nbsp;&nbsp;&nbsp;
+
+                    <strong>Hora:</strong> ____________
+                </p>
+
+                <hr />
+
+                <h3>Usuarios Registrados</h3>
+
+                <table border="1" style="width:100%; text-align:center;">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido P.</th>
+                        <th>Apellido M.</th>
+                        <th>Edad</th>
+                        <th>Género</th>
+                        <th>Email</th>
+                    </tr>
+
+                    @foreach (var item in Model.ListaUsuarios)
+                    {
+                        <tr>
+                            <td>@item.ID_USUARIO</td>
+                            <td>@item.NOMBRE</td>
+                            <td>@item.APELLIDO_PATERNO</td>
+                            <td>@item.APELLIDO_MATERNO</td>
+                            <td>@item.EDAD</td>
+                            <td>@item.GENERO</td>
+                            <td>@item.EMAIL</td>
+                        </tr>
+                    }
+
+                </table>
+
+            </td>
+
+        </tr>
+
+    </table>
+}

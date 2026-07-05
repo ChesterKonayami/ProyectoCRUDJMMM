@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace ProyectoPerritosWCF.Controllers
 {
     public class HomeController : Controller
@@ -95,12 +96,83 @@ namespace ProyectoPerritosWCF.Controllers
             return View(perro);
         }
 
+      
         /// Panel de Administración.
-        /// Aquí se implementará el sistema CRUD
-        /// para la administración de usuarios.
+        /// Muestra el formulario del CRUD de usuarios.
+        [HttpGet]
         public ActionResult Administracion()
         {
-            return View();
+            // Objeto encargado de consultar la base de datos.
+            UsuarioCRUD crud =
+                new UsuarioCRUD();
+
+            // Crear el ViewModel que utilizará la vista.
+            AdministracionViewModel modelo =
+                new AdministracionViewModel();
+
+            // Inicializar el formulario vacío.
+            modelo.Usuario =
+                new UsuarioCRUDModel();
+
+            // Obtener todos los usuarios registrados.
+            modelo.ListaUsuarios =
+                crud.ObtenerTodosLosUsuarios();
+
+            return View(modelo);
+        }
+
+        // =====================================================
+        // Recibe las acciones del formulario CRUD.
+        // =====================================================
+
+        [HttpPost]
+        public ActionResult Administracion(
+            UsuarioCRUDModel usuario,
+            string accion)
+        {
+            // Objeto para acceder a la base de datos.
+            UsuarioCRUD crud = new UsuarioCRUD();
+
+            // Crear el ViewModel que se enviará nuevamente a la vista.
+            AdministracionViewModel modelo =
+                new AdministracionViewModel();
+
+            // Cargar siempre la tabla de usuarios.
+            modelo.ListaUsuarios =
+                crud.ObtenerTodosLosUsuarios();
+
+            // Verificar qué botón fue presionado.
+            if (accion == "Consultar")
+            {
+                // Buscar el usuario por ID.
+                UsuarioCRUDModel usuarioConsultado =
+                    crud.ConsultarUsuarioPorId(
+                        usuario.ID_USUARIO);
+
+                if (usuarioConsultado != null)
+                {
+                    // Limpiar los datos enviados por el formulario.
+                    ModelState.Clear();
+
+                    // Llenar el formulario con los datos encontrados.
+                    modelo.Usuario =
+                        usuarioConsultado;
+                }
+                else
+                {
+                    // Si no existe, conservar únicamente el ID capturado.
+                    modelo.Usuario =
+                        usuario;
+                }
+            }
+            else
+            {
+                modelo.Usuario =
+                    usuario;
+            }
+
+            return View(modelo);
         }
     }
 }
+

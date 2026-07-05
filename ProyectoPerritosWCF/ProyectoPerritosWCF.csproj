@@ -178,17 +178,21 @@
     <Compile Include="Contracts\IDogService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\ConexionBD.cs" />
+    <Compile Include="Data\UsuarioCRUD.cs" />
     <Compile Include="Data\UsuarioRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdministracionViewModel.cs" />
     <Compile Include="Models\DogApiResponse.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\UsuarioCRUDModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Connected Services\DogServiceReference\DogService.wsdl" />
     <None Include="Connected Services\DogServiceReference\item.disco" />
     <None Include="Connected Services\DogServiceReference\configuration91.svcinfo" />
