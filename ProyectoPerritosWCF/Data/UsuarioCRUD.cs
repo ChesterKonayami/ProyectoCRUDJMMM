@@ -173,13 +173,71 @@ namespace ProyectoPerritosWCF.Data
         }
 
         // ======================================================
-        // INSERCIÓN:
-        // Inserta un nuevo usuario.
+        // REGISTRO:
+        // Registrar un nuevo usuario.
         // ======================================================
-        public bool InsertarUsuario(UsuarioCRUDModel usuario)
+        public bool RegistrarUsuario(UsuarioCRUDModel usuario)
         {
-            // IMPLEMENTACIÓN PENDIENTE.
-            return false;
+            // Objeto para acceder a la conexión con la base de datos.
+            ConexionBD conexionBD =
+                new ConexionBD();
+
+            // Consulta SQL para insertar un nuevo usuario.
+            string consulta =
+                "INSERT INTO tbl_usuarios_jmmm " +
+                "(NOMBRE, APELLIDO_PATERNO, APELLIDO_MATERNO, EDAD, GENERO, EMAIL, PASSWORD) " +
+                "VALUES " +
+                "(@nombre, @apellidoPaterno, @apellidoMaterno, @edad, @genero, @email, @password)";
+
+            // Crear la conexión utilizando la clase ConexionBD.
+            using (MySqlConnection conexion =
+                conexionBD.ObtenerConexion())
+            {
+                // Abrir la conexión con MySQL.
+                conexion.Open();
+
+                // Crear el comando SQL.
+                MySqlCommand comando =
+                    new MySqlCommand(
+                        consulta,
+                        conexion);
+
+                // Asignar los valores recibidos a los parámetros de la consulta.
+                comando.Parameters.AddWithValue(
+                    "@nombre",
+                    usuario.NOMBRE);
+
+                comando.Parameters.AddWithValue(
+                    "@apellidoPaterno",
+                    usuario.APELLIDO_PATERNO);
+
+                comando.Parameters.AddWithValue(
+                    "@apellidoMaterno",
+                    usuario.APELLIDO_MATERNO);
+
+                comando.Parameters.AddWithValue(
+                    "@edad",
+                    usuario.EDAD);
+
+                comando.Parameters.AddWithValue(
+                    "@genero",
+                    usuario.GENERO);
+
+                comando.Parameters.AddWithValue(
+                    "@email",
+                    usuario.EMAIL);
+
+                comando.Parameters.AddWithValue(
+                    "@password",
+                    usuario.PASSWORD);
+
+                // Ejecutar la inserción.
+                int filasAfectadas =
+                    comando.ExecuteNonQuery();
+
+                // Regresar verdadero si se insertó un registro.
+                return filasAfectadas > 0;
+            }
         }
 
         // ======================================================
@@ -188,8 +246,77 @@ namespace ProyectoPerritosWCF.Data
         // ======================================================
         public bool ActualizarUsuario(UsuarioCRUDModel usuario)
         {
-            // IMPLEMENTACIÓN PENDIENTE.
-            return false;
+            // Objeto para acceder a la conexión con la base de datos.
+            ConexionBD conexionBD =
+                new ConexionBD();
+
+            // Consulta SQL para actualizar un usuario.
+            string consulta =
+                "UPDATE tbl_usuarios_jmmm " +
+                "SET " +
+                "NOMBRE = @nombre, " +
+                "APELLIDO_PATERNO = @apellidoPaterno, " +
+                "APELLIDO_MATERNO = @apellidoMaterno, " +
+                "EDAD = @edad, " +
+                "GENERO = @genero, " +
+                "EMAIL = @email, " +
+                "PASSWORD = @password " +
+                "WHERE ID_USUARIO = @idUsuario";
+
+            // Crear la conexión utilizando la clase ConexionBD.
+            using (MySqlConnection conexion =
+                conexionBD.ObtenerConexion())
+            {
+                // Abrir la conexión con MySQL.
+                conexion.Open();
+
+                // Crear el comando SQL.
+                MySqlCommand comando =
+                    new MySqlCommand(
+                        consulta,
+                        conexion);
+
+                // Enviar los datos del objeto usuario
+                // a los parámetros de la consulta SQL.
+                comando.Parameters.AddWithValue(
+                    "@nombre",
+                    usuario.NOMBRE);
+
+                comando.Parameters.AddWithValue(
+                    "@apellidoPaterno",
+                    usuario.APELLIDO_PATERNO);
+
+                comando.Parameters.AddWithValue(
+                    "@apellidoMaterno",
+                    usuario.APELLIDO_MATERNO);
+
+                comando.Parameters.AddWithValue(
+                    "@edad",
+                    usuario.EDAD);
+
+                comando.Parameters.AddWithValue(
+                    "@genero",
+                    usuario.GENERO);
+
+                comando.Parameters.AddWithValue(
+                    "@email",
+                    usuario.EMAIL);
+
+                comando.Parameters.AddWithValue(
+                    "@password",
+                    usuario.PASSWORD);
+
+                comando.Parameters.AddWithValue(
+                    "@idUsuario",
+                    usuario.ID_USUARIO);
+
+                // Ejecutar la actualización del usuario.
+                int filasAfectadas =
+                    comando.ExecuteNonQuery();
+
+                // Verificar si la actualización fue exitosa.
+                return filasAfectadas > 0;
+            }
         }
 
         // ======================================================
@@ -198,8 +325,40 @@ namespace ProyectoPerritosWCF.Data
         // ======================================================
         public bool EliminarUsuario(int idUsuario)
         {
-            // IMPLEMENTACIÓN PENDIENTE.
-            return false;
+            // Objeto para acceder a la conexión con la base de datos.
+            ConexionBD conexionBD =
+                new ConexionBD();
+
+            // Consulta SQL para eliminar un usuario.
+            string consulta =
+                "DELETE FROM tbl_usuarios_jmmm " +
+                "WHERE ID_USUARIO = @idUsuario";
+
+            // Crear la conexión utilizando la clase ConexionBD.
+            using (MySqlConnection conexion =
+                conexionBD.ObtenerConexion())
+            {
+                // Abrir la conexión con MySQL.
+                conexion.Open();
+
+                // Crear el comando SQL.
+                MySqlCommand comando =
+                    new MySqlCommand(
+                        consulta,
+                        conexion);
+
+                // Enviar el ID recibido como parámetro.
+                comando.Parameters.AddWithValue(
+                    "@idUsuario",
+                    idUsuario);
+
+                // Ejecutar la eliminación.
+                int filasAfectadas =
+                    comando.ExecuteNonQuery();
+
+                // Regresar verdadero si se eliminó un registro.
+                return filasAfectadas > 0;
+            }
         }
 
         // ======================================================

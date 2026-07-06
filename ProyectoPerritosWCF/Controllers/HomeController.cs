@@ -131,7 +131,8 @@ namespace ProyectoPerritosWCF.Controllers
             string accion)
         {
             // Objeto para acceder a la base de datos.
-            UsuarioCRUD crud = new UsuarioCRUD();
+            UsuarioCRUD crud =
+                new UsuarioCRUD();
 
             // Crear el ViewModel que se enviará nuevamente a la vista.
             AdministracionViewModel modelo =
@@ -141,7 +142,13 @@ namespace ProyectoPerritosWCF.Controllers
             modelo.ListaUsuarios =
                 crud.ObtenerTodosLosUsuarios();
 
-            // Verificar qué botón fue presionado.
+            // =====================================================
+            // ACCIONES DEL CRUD.
+            // =====================================================
+
+            // =========
+            // CONSULTAR
+            // =========
             if (accion == "Consultar")
             {
                 // Buscar el usuario por ID.
@@ -165,6 +172,100 @@ namespace ProyectoPerritosWCF.Controllers
                         usuario;
                 }
             }
+
+            // =========
+            // REGISTRAR
+            // =========
+            else if (accion == "Registrar")
+            {
+                // Registrar el nuevo usuario.
+                bool registroExitoso =
+                    crud.RegistrarUsuario(usuario);
+
+                if (registroExitoso)
+                {
+                    // Limpiar los datos enviados por el formulario.
+                    ModelState.Clear();
+
+                    // Inicializar nuevamente el formulario.
+                    modelo.Usuario =
+                        new UsuarioCRUDModel();
+
+                    // Actualizar la tabla de usuarios.
+                    modelo.ListaUsuarios =
+                        crud.ObtenerTodosLosUsuarios();
+                }
+                else
+                {
+                    // Conservar la información capturada en el formulario.
+                    modelo.Usuario =
+                        usuario;
+                }
+            }
+
+            // ==========
+            // ACTUALIZAR
+            // ==========
+            else if (accion == "Actualizar")
+            {
+                // Actualizar la información del usuario.
+                bool actualizacionExitosa =
+                    crud.ActualizarUsuario(usuario);
+
+                if (actualizacionExitosa)
+                {
+                    // Limpiar los datos enviados por el formulario.
+                    ModelState.Clear();
+
+                    // Inicializar nuevamente el formulario.
+                    modelo.Usuario =
+                        new UsuarioCRUDModel();
+
+                    // Actualizar la tabla de usuarios.
+                    modelo.ListaUsuarios =
+                        crud.ObtenerTodosLosUsuarios();
+                }
+                else
+                {
+                    // Conservar la información capturada en el formulario.
+                    modelo.Usuario =
+                        usuario;
+                }
+            }
+            // ========
+            // ELIMINAR
+            // ========
+            else if (accion == "Eliminar")
+            {
+                // Eliminar el usuario mediante su ID.
+                bool eliminacionExitosa =
+                    crud.EliminarUsuario(
+                        usuario.ID_USUARIO);
+
+                if (eliminacionExitosa)
+                {
+                    // Limpiar los datos enviados por el formulario.
+                    ModelState.Clear();
+
+                    // Inicializar nuevamente el formulario.
+                    modelo.Usuario =
+                        new UsuarioCRUDModel();
+
+                    // Actualizar la tabla de usuarios.
+                    modelo.ListaUsuarios =
+                        crud.ObtenerTodosLosUsuarios();
+                }
+                else
+                {
+                    // Conservar la información capturada en el formulario.
+                    modelo.Usuario =
+                        usuario;
+                }
+            }
+
+            // ======================================
+            // OTRAS ACCIONES
+            // ======================================
             else
             {
                 modelo.Usuario =
