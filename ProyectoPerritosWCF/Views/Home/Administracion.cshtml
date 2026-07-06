@@ -7,10 +7,7 @@ SISTEMAS COMPUTACIONALES-->
     ViewBag.Title = "Administración";
 }
 
-<!-- ========================================= -->
-<!-- Panel de Administración                   -->
-<!-- Proyecto CRUD JMMM                        -->
-<!-- ========================================= -->
+<!-- Panel de Administración -->
 
 <h2>Panel de Administración de Usuarios</h2>
 
@@ -21,24 +18,57 @@ SISTEMAS COMPUTACIONALES-->
     "Home",
     FormMethod.Post))
 {
+    <script>
+
+        // Limpia un TextBox cuando su valor inicial es 0.
+        function limpiarSiEsCero(idControl) {
+            var control = document.getElementById(idControl);
+
+            if (control && control.value === "0") {
+                control.value = "";
+            }
+        }
+
+        // Se ejecuta al cargar la página.
+        window.onload = function () {
+            // Limpiar los campos numéricos.
+            limpiarSiEsCero("txtID");
+            limpiarSiEsCero("txtEdad");
+        };
+
+        // Solo permitir números en la Edad.
+        document.getElementById("txtEdad")
+            .addEventListener("input", function () {
+                this.value =
+                    this.value.replace(/[^0-9]/g, "");
+            });
+
+    </script>
 
     <table style="width:100%;">
 
         <tr>
 
-            <!-- ========================================= -->
-            <!-- Formulario CRUD                           -->
-            <!-- ========================================= -->
+            <!-- =============== -->
+            <!-- Formulario CRUD -->
+            <!-- =============== -->
 
             <td style="width:40%; vertical-align:top;">
 
                 <h3>Formulario de Usuario</h3>
 
-                <p>
+                <!-- Datos de búsqueda-->
                 <p>
                     <label>ID:</label><br />
 
-                    @Html.TextBoxFor(model => model.Usuario.ID_USUARIO)
+                    @Html.TextBoxFor(
+                            model => model.Usuario.ID_USUARIO,
+                            new
+                            {
+                                 id = "txtID",
+                                 placeholder = "Ingrese el ID del usuario",
+                                 autocomplete = "off"
+                            })
 
                     <button type="submit"
                             name="accion"
@@ -48,69 +78,185 @@ SISTEMAS COMPUTACIONALES-->
 
                 </p>
 
-
+                <!-- Datos personales-->
                 <p>
                     <label>Nombre:</label><br />
 
-                    @Html.TextBoxFor(model => model.Usuario.NOMBRE)
-
+                    @Html.TextBoxFor(
+                            model => model.Usuario.NOMBRE,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Ingrese el nombre",
+                                maxlength = "50",
+                                autocomplete = "off"
+                            })
                 </p>
 
                 <p>
                     <label>Apellido Paterno:</label><br />
 
-                    @Html.TextBoxFor(model => model.Usuario.APELLIDO_PATERNO)
-
+                    @Html.TextBoxFor(
+                         model => model.Usuario.APELLIDO_PATERNO,
+                         new
+                         {
+                             @class = "form-control",
+                             placeholder = "Ingrese el apellido paterno",
+                             maxlength = "50",
+                             autocomplete = "off"
+                         })
                 </p>
+
 
                 <p>
                     <label>Apellido Materno:</label><br />
-                    @Html.TextBoxFor(model => model.Usuario.APELLIDO_MATERNO)
+                    @Html.TextBoxFor(
+                            model => model.Usuario.APELLIDO_MATERNO,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Ingrese el apellido materno",
+                                maxlength = "50",
+                                autocomplete = "off"
+                            })
                 </p>
 
                 <p>
                     <label>Edad:</label><br />
-                    @Html.TextBoxFor(model => model.Usuario.EDAD)
+
+                    @Html.TextBoxFor(
+                        model => model.Usuario.EDAD,
+                        new
+                        {
+                            id = "txtEdad",
+                            placeholder = "Ingrese la edad",
+                            maxlength = "3",
+                            autocomplete = "off"
+                        })
+
                 </p>
 
                 <p>
                     <label>Género:</label><br />
-                    @Html.TextBoxFor(model => model.Usuario.GENERO)
+
+                    @Html.DropDownListFor(
+                        model => model.Usuario.GENERO,
+                        new List<SelectListItem>
+                        {
+                            new SelectListItem
+                            {
+                                Text = "Seleccione un género",
+                                Value = ""
+                            },
+
+                            new SelectListItem
+                            {
+                                Text = "Masculino",
+                                Value = "Masculino"
+                            },
+
+                            new SelectListItem
+                            {
+                                Text = "Femenino",
+                                Value = "Femenino"
+                            }
+
+                        },
+                        new
+                        {
+                            id = "cmbGenero",
+                        })
+
                 </p>
 
+                <!-- Datos de acceso-->
                 <p>
                     <label>Email:</label><br />
-                    @Html.TextBoxFor(model => model.Usuario.EMAIL)
+
+                    @Html.TextBoxFor(
+                        model => model.Usuario.EMAIL,
+                        new
+                        {
+                            id = "txtEmail",
+                            type = "email",
+                            placeholder = "Ingrese el correo electrónico",
+                            maxlength = "100",
+                            autocomplete = "off"
+                        })
+
                 </p>
 
                 <p>
                     <label>Confirmación de Email:</label><br />
-                    <input type="text" />
+
+                    <input type="email"
+                           id="txtConfirmarEmail"
+                           name="ConfirmarEmail"
+                           placeholder="Confirme el correo electrónico"
+                           maxlength="100"
+                           autocomplete="off" />
+
                 </p>
 
                 <p>
                     <label>Contraseña:</label><br />
-                    @Html.TextBoxFor(model => model.Usuario.PASSWORD)
+
+                    @Html.PasswordFor(
+                        model => model.Usuario.PASSWORD,
+                        new
+                        {
+                            id = "txtPassword",
+                            placeholder = "Ingrese la contraseña",
+                            maxlength = "50",
+                            autocomplete = "new-password"
+                        })
+
                 </p>
 
                 <p>
                     <label>Confirmación de Contraseña:</label><br />
-                    <input type="password" />
+
+                    <input type="password"
+                           id="txtConfirmarPassword"
+                           name="ConfirmarPassword"
+                           placeholder="Confirme la contraseña"
+                           maxlength="50"
+                           autocomplete="new-password" />
+
                 </p>
 
                 <br />
 
-                <button>Guardar</button>
-                <button>Actualizar</button>
-                <button>Eliminar</button>
-                <button>Limpiar</button>
+                <!-- Botones del CRUD-->
+
+                <button type="submit"
+                        name="accion"
+                        value="Guardar">
+                    Guardar
+                </button>
+
+                <button type="submit"
+                        name="accion"
+                        value="Actualizar">
+                    Actualizar
+                </button>
+
+                <button type="submit"
+                        name="accion"
+                        value="Eliminar">
+                    Eliminar
+                </button>
+
+                <button type="submit"
+                        name="accion"
+                        value="Limpiar">
+                    Limpiar
+                </button>
 
             </td>
 
 
-            <!-- ========================================= -->
-            <!-- Información y tabla                       -->
-            <!-- ========================================= -->
+            <!-- Información y tabla-->
 
             <td style="vertical-align:top;">
 
@@ -132,6 +278,7 @@ SISTEMAS COMPUTACIONALES-->
 
                 <table border="1" style="width:100%; text-align:center;">
 
+                    <!-- Encabezado de la tabla -->
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
@@ -142,6 +289,7 @@ SISTEMAS COMPUTACIONALES-->
                         <th>Email</th>
                     </tr>
 
+                    <!-- Registros obtenidos de la base de datos-->
                     @foreach (var item in Model.ListaUsuarios)
                     {
                         <tr>
@@ -162,4 +310,5 @@ SISTEMAS COMPUTACIONALES-->
         </tr>
 
     </table>
+
 }
