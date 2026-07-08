@@ -1,647 +1,758 @@
-﻿<!--SEMANA 8
-JOSEPH MAURICIO MONDRAGON MORENO
-SISTEMAS COMPUTACIONALES-->
+﻿<!-- SEMANA 9                                  -->
+<!-- JOSEPH MAURICIO MONDRAGON MORENO          -->
+<!-- SISTEMAS COMPUTACIONALES                  -->
 
 @{
-    ViewBag.Title = "Documentación";
+    ViewBag.Title = "Documentación Técnica";
 }
 
 <main aria-labelledby="title">
 
-    <h1 id="title">Documentación del Proyecto</h1>
+    <!-- ========================================= -->
+    <!-- TÍTULO PRINCIPAL -->
+    <!-- ========================================= -->
+
+    <h1 id="title">
+        Documentación Técnica del Sistema
+    </h1>
 
     <hr />
 
+    <!-- ========================================= -->
+    <!-- 1. DESCRIPCIÓN GENERAL -->
+    <!-- ========================================= -->
+
     <br />
+
     <h2>1. Descripción General</h2>
 
     <p>
-        El presente proyecto consiste en una aplicación web desarrollada utilizando
-        ASP.NET MVC 5, C# y Windows Communication Foundation (WCF).
+        El presente proyecto consiste en una aplicación web desarrollada
+        utilizando ASP.NET MVC 5, C#, Windows Communication Foundation (WCF)
+        y MySQL, siguiendo el patrón de arquitectura Modelo - Vista -
+        Controlador (MVC).
     </p>
 
     <p>
-        El sistema permite consumir la API pública Dog CEO mediante un servicio WCF,
-        el cual actúa como intermediario entre la aplicación web y la API externa.
+        Durante las primeras etapas de desarrollo, el sistema fue diseñado
+        para consumir la API pública Dog CEO mediante un servicio WCF,
+        permitiendo obtener imágenes aleatorias de perros desde una
+        aplicación web.
     </p>
 
     <p>
-        La aplicación incorpora una pantalla de autenticación de usuarios, una capa
-        de acceso a datos para la conexión con MySQL y una arquitectura distribuida
-        basada en servicios que favorece la separación de responsabilidades.
-    </p>
-    <hr />
-
-    <br />
-    <h2>2. Objetivo del Proyecto</h2>
-
-    <p>
-        Desarrollar una aplicación web basada en el patrón MVC capaz de consumir un
-        servicio WCF para obtener información proveniente de servicios externos,
-        integrando además una base de datos MySQL para la autenticación de usuarios.
+        Conforme avanzó el proyecto, la aplicación evolucionó incorporando
+        un módulo administrativo para la gestión de usuarios mediante
+        operaciones CRUD (Crear, Consultar, Actualizar y Eliminar),
+        integrando nuevas capas de acceso a datos, modelos especializados,
+        validaciones y comunicación con una base de datos MySQL.
     </p>
 
     <p>
-        Como caso práctico se implementó el consumo de la API pública Dog CEO para
-        la obtención de imágenes aleatorias de perros.
+        Actualmente el sistema se encuentra dividido en dos módulos
+        principales:
     </p>
-    <hr />
-
-    <br />
-    <h2>3. Tecnologías Utilizadas</h2>
 
     <ul>
-        <li>ASP.NET MVC 5</li>
-        <li>Lenguaje C#</li>
-        <li>Bootstrap</li>
-        <li>MySQL</li>
-        <li>Newtonsoft.Json</li>
-        <li>Dog CEO API</li>
-        <li>Visual Studio</li>
-        <li>Windows Communication Foundation (WCF)</li>
+        <li>
+            <strong>Módulo de Consumo de API:</strong>
+            encargado de comunicarse con el servicio WCF y obtener
+            información desde la API Dog CEO.
+        </li>
+
+        <li>
+            <strong>Módulo Administrativo:</strong>
+            encargado de administrar la información de usuarios mediante
+            operaciones CRUD y validaciones de negocio.
+        </li>
     </ul>
+
+    <p>
+        Esta documentación describe la arquitectura, el funcionamiento y
+        las principales decisiones de diseño implementadas durante el
+        desarrollo del proyecto.
+    </p>
 
     <hr />
 
+    <!-- ========================================= -->
+    <!-- 2. ARQUITECTURA GENERAL DEL SISTEMA -->
+    <!-- ========================================= -->
+
     <br />
-    <h2>4. Arquitectura del Proyecto</h2>
+
+    <h2>2. Arquitectura General del Sistema</h2>
 
     <p>
-        El sistema fue desarrollado siguiendo el patrón de arquitectura
-        Modelo - Vista - Controlador (MVC), permitiendo una separación
-        clara de responsabilidades.
+        El proyecto fue desarrollado siguiendo el patrón de arquitectura
+        Modelo - Vista - Controlador (MVC), permitiendo mantener una clara
+        separación entre la interfaz de usuario, la lógica de negocio y el
+        acceso a los datos.
+    </p>
+
+    <p>
+        La aplicación está conformada por dos módulos principales que
+        funcionan de manera independiente, pero comparten la misma
+        arquitectura y la misma base de datos.
+    </p>
+
+    <h3>Módulo de Consumo de API</h3>
+
+    <p>
+        Este módulo es responsable de consumir la API pública Dog CEO
+        mediante un servicio Windows Communication Foundation (WCF),
+        obteniendo imágenes aleatorias de perros para mostrarlas al usuario
+        dentro de la aplicación web.
+    </p>
+
+    <h3>Módulo Administrativo</h3>
+
+    <p>
+        Este módulo incorpora las operaciones CRUD para la administración
+        de usuarios almacenados en la base de datos MySQL. Asimismo,
+        implementa diversas validaciones que permiten garantizar la
+        integridad de la información capturada por el usuario.
+    </p>
+
+    <h3>Arquitectura General</h3>
+
+<pre>
+                    ProyectoPerritosWCF
+                           │
+                           ▼
+                    HomeController
+                 ┌─────────┴─────────┐
+                 │                   │
+                 ▼                   ▼
+         Módulo CRUD          Módulo Perritos
+
+         UsuarioCRUD          DogServiceClient
+              │                    │
+              ▼                    ▼
+          Base de Datos       Servicio WCF
+                                   │
+                                   ▼
+                              API Dog CEO
+</pre>
+
+    <p>
+        Esta organización permite mantener cada módulo independiente,
+        facilitando el mantenimiento del sistema, la reutilización del
+        código y la incorporación de nuevas funcionalidades sin afectar
+        la estructura general del proyecto.
+    </p>
+
+    <hr />
+
+    <!-- ========================================= -->
+    <!-- 3. ESTRUCTURA DEL PROYECTO -->
+    <!-- ========================================= -->
+
+    <br />
+
+    <h2>3. Estructura del Proyecto</h2>
+
+    <p>
+        El proyecto se encuentra organizado siguiendo la estructura
+        característica de ASP.NET MVC, distribuyendo las responsabilidades
+        en carpetas especializadas que facilitan el mantenimiento y la
+        escalabilidad del sistema.
+    </p>
+
+    <p>
+        Cada carpeta cumple una función específica dentro de la arquitectura,
+        permitiendo separar la lógica de negocio, el acceso a los datos,
+        la presentación de la información y la comunicación con servicios
+        externos.
+    </p>
+
+    <h3>Controllers</h3>
+
+    <p>
+        Contiene los controladores encargados de recibir las solicitudes
+        realizadas desde las vistas, procesar la lógica correspondiente y
+        coordinar la comunicación entre los modelos, los servicios y la
+        interfaz de usuario.
     </p>
 
     <h3>Models</h3>
 
     <p>
-        Contiene las clases utilizadas para representar la información
-        manejada por el sistema.
+        Almacena las clases utilizadas para representar la información del
+        sistema, incluyendo los modelos de usuarios, modelos auxiliares y
+        objetos utilizados para intercambiar información entre las vistas
+        y los controladores.
     </p>
-
-    <ul>
-        <li><strong>Usuario:</strong> almacena los datos de autenticación.</li>
-        <li><strong>DogApiResponse:</strong> representa la respuesta JSON de la API.</li>
-    </ul>
-
-    <h3>Controllers</h3>
-
-    <p>
-        Contiene la lógica de navegación y comunicación entre las vistas
-        y los modelos.
-    </p>
-
-    <ul>
-        <li><strong>HomeController:</strong> controlador principal del proyecto.</li>
-    </ul>
-
-    <h3>Views</h3>
-
-    <p>
-        Contiene las interfaces gráficas visibles para el usuario.
-    </p>
-
-    <ul>
-        <li><strong>Index:</strong> pantalla de Login.</li>
-        <li><strong>Perritos:</strong> visualización de imágenes obtenidas desde la API.</li>
-        <li><strong>About:</strong> documentación técnica del proyecto.</li>
-    </ul>
-
-    <h3>Services</h3>
-
-    <p>
-        Contiene la lógica encargada de consumir servicios externos.
-    </p>
-
-    <ul>
-        <li><strong>DogService:</strong> realiza las peticiones HTTP hacia la API Dog CEO.</li>
-    </ul>
 
     <h3>Data</h3>
 
     <p>
-        Contiene la lógica de acceso a datos y conexión con MySQL.
+        Contiene las clases responsables de establecer la comunicación con
+        la base de datos MySQL y ejecutar las operaciones correspondientes
+        al módulo CRUD.
     </p>
 
-    <ul>
-        <li><strong>ConexionBD:</strong> administra la conexión y validación de usuarios.</li>
-    </ul>
-
-    <h3>Servicio WCF</h3>
+    <h3>Services</h3>
 
     <p>
-        Se desarrolló un servicio WCF independiente encargado de realizar el
-        consumo de la API Dog CEO.
+        Incluye las clases utilizadas para establecer la comunicación con
+        servicios externos y centralizar la lógica necesaria para consumir
+        recursos fuera de la aplicación.
     </p>
 
-    <ul>
-        <li><strong>IDogService:</strong> contrato del servicio.</li>
-        <li><strong>DogService:</strong> implementación del servicio.</li>
-    </ul>
-
-    <hr />
-
-    <br />
-    <h2>5. Diagrama de Flujo General del Sistema</h2>
+    <h3>DogServiceReference</h3>
 
     <p>
-        El siguiente diagrama representa el flujo general de funcionamiento
-        de la aplicación.
+        Contiene la referencia al servicio WCF encargado de consumir la API
+        Dog CEO y regresar la información necesaria para mostrar imágenes
+        aleatorias de perros dentro del sistema.
     </p>
 
-    <pre>
-INICIO
-   │
-   ▼
-Pantalla Login
-   │
-   ▼
-Validar Usuario
-   │
-   ├── Correcto
-   │        │
-   │        ▼
-   │   Pantalla Perritos
-   │        │
-   │        ▼
-   │    MVC
-   │        │
-   │        ▼
-   │    Servicio WCF
-   │        │
-   │        ▼
-   │    API Dog CEO
-   │        │
-   │        ▼
-   │    JSON
-   │        │
-   │        ▼
-   │    WCF
-   │        │
-   │        ▼
-   │    MVC
-   │        │
-   │        ▼
-   │ Mostrar Imagen
-   │
-   └── Incorrecto
-            │
-            ▼
-      Mostrar Error
-</pre>
-
-    <hr />
-
-    <br />
-    <h2>6. Flujo de Consumo de la API</h2>
+    <h3>Views</h3>
 
     <p>
-        El sistema utiliza una arquitectura por capas para consumir la API
-        pública Dog CEO.
+        Almacena todas las vistas del proyecto desarrolladas con Razor
+        (.cshtml), incluyendo la pantalla de inicio de sesión, la página
+        de administración de usuarios, la vista de consumo de la API y la
+        presente documentación técnica.
     </p>
 
-    <pre>
-HomeController (MVC)
-        │
-        ▼
-DogServiceClient
-        │
-        ▼
-Servicio WCF
-        │
-        ▼
-DogService
-        │
-        ▼
-WebClient
-        │
-        ▼
-Dog CEO API
-        │
-        ▼
-JSON
-        │
-        ▼
-Servicio WCF
-        │
-        ▼
-MVC
-        │
-        ▼
-DogApiResponse
-        │
-        ▼
-Vista Perritos
-</pre>
+    <h3>Content y Scripts</h3>
 
     <p>
-        Esta estructura permite separar la lógica de negocio de la interfaz
-        gráfica, facilitando el mantenimiento y la reutilización del código.
+        Estas carpetas contienen los archivos de estilos (CSS), imágenes,
+        bibliotecas JavaScript y demás recursos utilizados para mejorar la
+        presentación y el funcionamiento de la interfaz de usuario.
     </p>
 
     <hr />
 
+    <!-- ========================================= -->
+    <!-- 4. MÓDULO DE CONSUMO DE API -->
+    <!-- ========================================= -->
+
     <br />
-    <h2>7. API Utilizada</h2>
+
+    <h2>4. Módulo de Consumo de API</h2>
 
     <p>
-        Para la obtención de imágenes aleatorias se utilizó la API pública:
+        Uno de los componentes principales del proyecto corresponde al
+        módulo de consumo de servicios externos, el cual permite obtener
+        imágenes aleatorias de perros mediante la API pública Dog CEO.
     </p>
 
     <p>
-        <strong>Dog CEO API</strong>
+        Para desacoplar la aplicación web del servicio externo, se implementó
+        un servicio Windows Communication Foundation (WCF), el cual funciona
+        como intermediario entre la aplicación ASP.NET MVC y la API pública.
     </p>
 
     <p>
-        Endpoint utilizado:
+        Esta arquitectura permite centralizar la comunicación con servicios
+        externos, facilitando el mantenimiento del sistema y reduciendo el
+        impacto que pudiera ocasionar un cambio futuro en la API utilizada.
     </p>
 
-    <code>
-        https://dog.ceo/api/breeds/image/random
-    </code>
-
-    <p>
-        Tipo de petición:
-    </p>
-
-    <ul>
-        <li>GET</li>
-    </ul>
-
-    <p>
-        Ejemplo de respuesta:
-    </p>
+    <h3>Flujo general de comunicación</h3>
 
 <pre>
-{
-    "message": "https://images.dog.ceo/breeds/...",
-    "status": "success"
-}
+            Usuario
+               │
+               ▼
+        Página Perritos
+               │
+               ▼
+        HomeController
+               │
+               ▼
+        DogServiceClient
+               │
+               ▼
+         Servicio WCF
+               │
+               ▼
+          API Dog CEO
+               │
+         Respuesta JSON
+               │
+               ▼
+      Imagen Aleatoria
+               │
+               ▼
+        Vista Perritos
 </pre>
 
     <p>
-        Donde:
+        El servicio WCF recibe la solicitud enviada desde el controlador,
+        realiza la consulta a la API Dog CEO y devuelve la respuesta en
+        formato JSON. Posteriormente, el controlador procesa dicha
+        información y la envía a la vista correspondiente para mostrar la
+        imagen obtenida al usuario.
     </p>
 
-    <ul>
-        <li>
-            <strong>message:</strong>
-            contiene la dirección URL de la imagen obtenida.
-        </li>
+    <h3>Componentes involucrados</h3>
 
-        <li>
-            <strong>status:</strong>
-            indica si la operación fue exitosa.
-        </li>
+    <ul>
+        <li><strong>HomeController:</strong> coordina la solicitud realizada desde la vista.</li>
+
+        <li><strong>DogServiceClient:</strong> establece la comunicación con el servicio WCF.</li>
+
+        <li><strong>Servicio WCF:</strong> consume la API pública y obtiene la información solicitada.</li>
+
+        <li><strong>DogApiResponse:</strong> representa el modelo utilizado para deserializar la respuesta JSON.</li>
+
+        <li><strong>Vista Perritos:</strong> muestra la imagen obtenida desde la API.</li>
     </ul>
 
     <hr />
 
+    <!-- ========================================= -->
+    <!-- 5. MÓDULO ADMINISTRATIVO (CRUD) -->
+    <!-- ========================================= -->
+
     <br />
-    <h2>8. Procesamiento de la Respuesta JSON</h2>
+
+    <h2>5. Módulo Administrativo (CRUD)</h2>
 
     <p>
-        La respuesta obtenida desde la API es recibida inicialmente como una
-        cadena de texto en formato JSON.
+        Como parte de la evolución del proyecto, se incorporó un módulo
+        administrativo encargado de gestionar la información de los usuarios
+        registrados en la base de datos mediante operaciones CRUD
+        (Create, Read, Update y Delete).
     </p>
 
     <p>
-        Posteriormente se utiliza la librería Newtonsoft.Json para convertir
-        dicha respuesta en un objeto de tipo DogApiResponse mediante el
-        proceso conocido como deserialización.
+        Este módulo representa la principal ampliación funcional del sistema,
+        permitiendo almacenar, consultar, modificar y eliminar registros de
+        manera controlada mediante un conjunto de validaciones implementadas
+        tanto en la interfaz de usuario como en la lógica de negocio.
     </p>
+
+    <p>
+        A diferencia del módulo de consumo de la API, cuyo objetivo es obtener
+        información desde un servicio externo, el módulo CRUD interactúa
+        directamente con la base de datos MySQL para administrar la información
+        generada por los usuarios del sistema.
+    </p>
+
+    <h3>Arquitectura del módulo CRUD</h3>
 
 <pre>
-JSON
-  │
-  ▼
-DeserializeObject()
-  │
-  ▼
-DogApiResponse
-  │
-  ├── Message
-  └── Status
+                Administrador
+                      │
+                      ▼
+            Vista Administración
+                      │
+                      ▼
+             HomeController
+                      │
+                      ▼
+              UsuarioCRUD.cs
+                      │
+                      ▼
+              ConexionBD.cs
+                      │
+                      ▼
+               Base de Datos MySQL
+                      │
+                      ▼
+          Respuesta de la consulta
+                      │
+                      ▼
+      Formulario y Tabla de Usuarios
 </pre>
 
     <p>
-        Una vez convertido a objeto, la información puede utilizarse
-        directamente dentro de las vistas del proyecto.
+        Todas las operaciones del CRUD son coordinadas por el
+        <strong>HomeController</strong>, el cual recibe las solicitudes
+        realizadas desde la vista de administración y determina la operación
+        correspondiente según el botón seleccionado por el usuario.
+    </p>
+
+    <p>
+        Posteriormente, el controlador delega la operación a la clase
+        <strong>UsuarioCRUD</strong>, responsable de ejecutar las consultas
+        SQL necesarias mediante la clase <strong>ConexionBD</strong>,
+        estableciendo la comunicación con la base de datos MySQL.
+    </p>
+
+    <p>
+        Finalmente, el resultado de cada operación es enviado nuevamente al
+        controlador, permitiendo actualizar el formulario, la tabla de
+        usuarios y los mensajes mostrados al usuario según el resultado
+        obtenido.
     </p>
 
     <hr />
 
-    <br />
-    <h2>9. Base de Datos</h2>
-
-    <p>
-        El sistema fue diseñado para trabajar con una base de datos MySQL
-        encargada de almacenar las credenciales de acceso de los usuarios.
-    </p>
-
-    <p>
-        La comunicación con el servidor de base de datos se realiza mediante
-        la librería MySql.Data y la clase ConexionBD desarrollada dentro del
-        proyecto.
-    </p>
-
-    <p>
-        La tabla utilizada para la autenticación de usuarios es:
-    </p>
-
-    <ul>
-        <li><strong>TBL_LOGIN_JMMM</strong></li>
-    </ul>
-
-    <p>
-        Los campos principales utilizados son:
-    </p>
-
-    <ul>
-        <li><strong>ID_USUARIO</strong></li>
-        <li><strong>USUARIO</strong></li>
-        <li><strong>PASSWORD</strong></li>
-    </ul>
-
-    <p>
-        La validación de credenciales se realiza mediante una consulta SQL
-        que compara el usuario y contraseña ingresados contra los registros
-        almacenados en la base de datos.
-    </p>
-
-    <hr />
+    <!-- ========================================= -->
+    <!-- 5.1 OPERACIÓN CONSULTAR -->
+    <!-- ========================================= -->
 
     <br />
-    <h2>10. Clases Principales del Proyecto</h2>
 
-    <h3>Usuario</h3>
-
-    <p>
-        Representa la información utilizada durante el proceso de
-        autenticación.
-    </p>
-
-    <ul>
-        <li>IdUsuario</li>
-        <li>NombreUsuario</li>
-        <li>Password</li>
-    </ul>
-
-    <h3>DogApiResponse</h3>
+    <h3>5.1 Operación Consultar</h3>
 
     <p>
-        Representa la estructura de la respuesta JSON enviada por la API
-        Dog CEO.
-    </p>
-
-    <ul>
-        <li>Message</li>
-        <li>Status</li>
-    </ul>
-
-    <h3>DogService</h3>
-
-    <p>
-        Clase encargada de realizar las peticiones HTTP hacia la API externa,
-        recibir la respuesta JSON y convertirla en objetos utilizables por el
-        sistema.
-    </p>
-
-    <h3>ConexionBD</h3>
-
-    <p>
-        Clase responsable de administrar la conexión con MySQL y ejecutar las
-        operaciones relacionadas con la autenticación de usuarios.
-    </p>
-
-    <h3>HomeController</h3>
-
-    <p>
-        Controlador principal encargado de gestionar la navegación entre las
-        vistas Login, Documentación y Perritos.
-    </p>
-
-    <h3>IDogService</h3>
-
-    <p>
-        Define el contrato del servicio WCF y expone la operación
-        ObtenerImagenAleatoriaPerro().
-    </p>
-
-    <h3>DogService (WCF)</h3>
-
-    <p>
-        Implementa el contrato IDogService y realiza el consumo de la API
-        Dog CEO.
-    </p>
-
-    <h3>DogServiceClient</h3>
-
-    <p>
-        Proxy generado automáticamente por Visual Studio para permitir la
-        comunicación entre el proyecto MVC y el servicio WCF.
-    </p>
-
-    <hr />
-
-    <br />
-    <h2>11. Implementación del Servicio WCF</h2>
-
-    <p>
-        Como parte del desarrollo del proyecto se implementó un servicio
-        Windows Communication Foundation (WCF) con el objetivo de separar
-        la lógica de consumo de servicios externos de la aplicación MVC.
+        La operación <strong>Consultar</strong> permite recuperar la
+        información de un usuario registrado mediante su identificador único
+        (ID). Esta operación constituye el punto de partida para las
+        operaciones de actualización y eliminación, ya que permite visualizar
+        previamente la información almacenada en la base de datos.
     </p>
 
     <p>
-        El servicio WCF actúa como una capa intermedia entre la aplicación
-        web y la API pública Dog CEO, permitiendo centralizar las operaciones
-        de comunicación HTTP y facilitando futuras modificaciones o ampliaciones
-        del sistema.
-    </p>
-
-    <h3>Estructura del Servicio</h3>
-
-    <p>
-        El servicio fue desarrollado mediante dos componentes principales:
-    </p>
-
-    <ul>
-        <li>
-            <strong>IDogService:</strong>
-            define el contrato del servicio y las operaciones disponibles.
-        </li>
-
-        <li>
-            <strong>DogService:</strong>
-            implementa la lógica necesaria para consumir la API Dog CEO.
-        </li>
-
-    </ul>
-
-    <h3>Configuración del Endpoint WCF</h3>
-
-    <p>
-        La comunicación entre el proyecto ASP.NET MVC y el servicio WCF se
-        configuró mediante un endpoint utilizando el binding
-        <strong>basicHttpBinding</strong>.
+        Al recibir un ID válido, el sistema consulta la base de datos y llena
+        automáticamente el formulario con la información correspondiente al
+        usuario seleccionado. De manera deliberada, el campo correspondiente
+        a la contraseña no es mostrado en pantalla, mientras que los campos
+        destinados a la confirmación del correo electrónico y de la contraseña
+        permanecen vacíos.
     </p>
 
     <p>
-        Esta configuración fue generada automáticamente por Visual Studio al
-        crear la referencia de servicio dentro del proyecto MVC.
+        Este comportamiento fue implementado con el propósito de proteger la
+        información confidencial del usuario y evitar que datos sensibles sean
+        expuestos durante el proceso de consulta.
     </p>
 
-    <p>
-        Fragmento de configuración utilizado:
-    </p>
+    <h4>Flujo de la operación</h4>
 
 <pre>
-&lt;endpoint
-    address="http://localhost:8733/Design_Time_Addresses/ProyectoPerritosServicioWCF/DogService/"
-    binding="basicHttpBinding"
-    bindingConfiguration="BasicHttpBinding_IDogService"
-    contract="DogServiceReference.IDogService"
-    name="BasicHttpBinding_IDogService" /&gt;
+          Usuario
+             │
+             ▼
+      Ingresa un ID
+             │
+             ▼
+      Operación Consultar
+             │
+             ▼
+ ¿El ID existe en la base de datos?
+
+      ┌───────────────┐
+      │      No       │
+      └───────────────┘
+             │
+             ▼
+    Mostrar mensaje de error
+             │
+      ┌───────────────┐
+      │      Sí       │
+      └───────────────┘
+             │
+             ▼
+ Recuperar información del usuario
+             │
+             ▼
+ Llenar automáticamente el formulario
+             │
+             ▼
+ No mostrar la contraseña
+
+             │
+             ▼
+ Mantener vacías las confirmaciones
 </pre>
 
-    <p>
-        Donde:
-    </p>
+    <h4>Validaciones implementadas</h4>
 
     <ul>
-        <li>
-            <strong>address:</strong>
-            dirección donde se encuentra publicado el servicio WCF.
-        </li>
 
-        <li>
-            <strong>binding:</strong>
-            mecanismo de comunicación utilizado entre cliente y servicio.
-            En este proyecto se empleó <strong>basicHttpBinding</strong>.
-        </li>
+        <li>Verificar que el ID haya sido capturado.</li>
 
-        <li>
-            <strong>contract:</strong>
-            interfaz utilizada para exponer las operaciones disponibles
-            del servicio.
-        </li>
+        <li>Validar que el ID sea mayor que cero.</li>
 
-        <li>
-            <strong>name:</strong>
-            identificador del endpoint dentro de la configuración.
-        </li>
+        <li>Consultar la existencia del usuario en la base de datos.</li>
 
+        <li>Mostrar un mensaje cuando el usuario no exista.</li>
+
+        <li>Llenar automáticamente el formulario cuando la consulta sea correcta.</li>
+
+        <li>No mostrar la contraseña almacenada.</li>
+
+        <li>Mantener vacíos los campos de confirmación.</li>
+
+        <li>Limpiar el formulario cuando ocurre un error durante la consulta.</li>
 
     </ul>
 
-
-    <h3>Funcionamiento</h3>
-
-    <p>
-        Cuando el usuario accede a la pantalla de Perritos, el controlador
-        HomeController crea una instancia del proxy generado automáticamente
-        por Visual Studio denominado DogServiceClient.
-    </p>
-
-    <p>
-        Posteriormente se invoca la operación
-        ObtenerImagenAleatoriaPerro(), la cual envía la solicitud al
-        servicio WCF.
-    </p>
-
-    <p>
-        El servicio consume la API pública Dog CEO utilizando la clase
-        WebClient, obtiene la respuesta JSON y la devuelve al proyecto MVC.
-    </p>
-
-    <p>
-        Finalmente, el proyecto MVC deserializa la información recibida
-        y la presenta al usuario mediante la vista Perritos.
-    </p>
-
-    <h3>Ventajas de la Implementación</h3>
-
-    <ul>
-        <li>Separación de responsabilidades.</li>
-        <li>Mayor organización del código fuente.</li>
-        <li>Facilidad para reutilizar servicios en otras aplicaciones.</li>
-        <li>Escalabilidad para futuras funcionalidades.</li>
-        <li>Mantenimiento simplificado de la lógica de negocio.</li>
-    </ul>
-
-    <h3>Flujo de Comunicación</h3>
-
-<pre>
-Usuario
-   │
-   ▼
-Aplicación MVC
-   │
-   ▼
-DogServiceClient
-   │
-   ▼
-Servicio WCF
-   │
-   ▼
-API Dog CEO
-   │
-   ▼
-Respuesta JSON
-   │
-   ▼
-Servicio WCF
-   │
-   ▼
-Aplicación MVC
-   │
-   ▼
-Vista Perritos
-</pre>
     <hr />
 
+    <!-- ========================================= -->
+    <!-- 5.2 OPERACIÓN REGISTRAR -->
+    <!-- ========================================= -->
+
     <br />
-    <h2>12. Conclusiones</h2>
+
+    <h3>5.2 Operación Registrar</h3>
 
     <p>
-        Se desarrolló una aplicación web utilizando ASP.NET MVC y Windows
-        Communication Foundation (WCF), integrando múltiples tecnologías
-        dentro de una misma solución.
+        La operación <strong>Registrar</strong> permite incorporar nuevos
+        usuarios a la base de datos del sistema. Antes de almacenar la
+        información, el sistema ejecuta una serie de validaciones destinadas
+        a verificar que los datos capturados sean correctos y cumplan con los
+        criterios establecidos para cada campo del formulario.
     </p>
 
     <p>
-        La implementación del patrón Modelo - Vista - Controlador permitió
-        mantener una adecuada separación entre la interfaz gráfica, la lógica
-        de negocio y la administración de datos.
+        Debido a que el identificador del usuario es generado
+        automáticamente por la base de datos, el sistema impide que el
+        usuario capture manualmente un valor en dicho campo. De esta forma
+        se garantiza la integridad de la llave primaria utilizada para
+        identificar cada registro.
     </p>
 
     <p>
-        Asimismo, la incorporación de un servicio WCF permitió desacoplar
-        la lógica de consumo de servicios externos, estableciendo una
-        arquitectura más organizada, escalable y fácil de mantener.
+        Una vez que todas las validaciones son superadas, la información es
+        almacenada en la base de datos, el formulario es reiniciado y la
+        tabla de usuarios es actualizada automáticamente para reflejar el
+        nuevo registro.
+    </p>
+
+    <h4>Flujo de la operación</h4>
+
+<pre>
+            Usuario
+               │
+               ▼
+     Captura la información
+               │
+               ▼
+      Ejecutar validaciones
+               │
+               ▼
+ ¿Toda la información es válida?
+
+      ┌───────────────┐
+      │      No       │
+      └───────────────┘
+               │
+               ▼
+      Mostrar mensaje de error
+               │
+      ┌───────────────┐
+      │      Sí       │
+      └───────────────┘
+               │
+               ▼
+ Registrar usuario en MySQL
+               │
+               ▼
+ Limpiar formulario
+               │
+               ▼
+ Actualizar tabla de usuarios
+</pre>
+
+    <h4>Validaciones implementadas</h4>
+
+    <ul>
+
+        <li>Verificar que el campo ID permanezca vacío.</li>
+
+        <li>Validar la captura del nombre.</li>
+
+        <li>Validar la captura del apellido paterno.</li>
+
+        <li>Validar la captura del apellido materno.</li>
+
+        <li>Validar el rango permitido para la edad.</li>
+
+        <li>Validar la selección del género.</li>
+
+        <li>Validar la captura del correo electrónico.</li>
+
+        <li>Validar el formato del correo electrónico.</li>
+
+        <li>Solicitar la confirmación del correo electrónico.</li>
+
+        <li>Verificar que ambos correos coincidan.</li>
+
+        <li>Validar la captura de la contraseña.</li>
+
+        <li>Solicitar la confirmación de la contraseña.</li>
+
+        <li>Verificar que ambas contraseñas coincidan.</li>
+
+        <li>Actualizar automáticamente la tabla de usuarios.</li>
+
+        <li>Limpiar el formulario después del registro exitoso.</li>
+
+    </ul>
+
+    <h4>Decisiones de diseño</h4>
+
+    <ul>
+
+        <li>
+            El ID del usuario es generado automáticamente por la base de
+            datos, evitando capturas manuales.
+        </li>
+
+        <li>
+            La confirmación del correo electrónico permite reducir errores
+            de captura antes de almacenar la información.
+        </li>
+
+        <li>
+            La confirmación de la contraseña garantiza que el usuario haya
+            escrito correctamente la información antes de registrarse.
+        </li>
+
+        <li>
+            El formulario se reinicia únicamente cuando el registro se
+            realiza correctamente.
+        </li>
+
+    </ul>
+
+    <hr />
+
+    <!-- ========================================= -->
+    <!-- 5.3 OPERACIÓN ACTUALIZAR -->
+    <!-- ========================================= -->
+
+    <br />
+
+    <h3>5.3 Operación Actualizar</h3>
+
+    <p>
+        La operación <strong>Actualizar</strong> permite modificar la
+        información de un usuario previamente registrado en la base de datos.
+        Su funcionamiento inicia a partir de una consulta exitosa, la cual
+        recupera la información asociada al identificador del usuario y llena
+        automáticamente el formulario con los datos existentes.
     </p>
 
     <p>
-        El sistema fue capaz de consumir exitosamente la API pública Dog CEO,
-        procesar respuestas en formato JSON y presentar dinámicamente la
-        información al usuario mediante una interfaz web.
+        Durante el diseño de esta operación se estableció como objetivo
+        permitir actualizaciones parciales, evitando que el usuario tenga que
+        capturar nuevamente información que no desea modificar. Para lograrlo,
+        el sistema analiza cada campo del formulario y determina si debe
+        conservar el valor existente o actualizarlo con la nueva información
+        proporcionada.
     </p>
 
     <p>
-        Durante el desarrollo se aplicaron conceptos de Programación Orientada
-        a Objetos, servicios distribuidos, consumo de APIs REST, serialización
-        y deserialización de datos, así como el uso de patrones de arquitectura
-        empresarial ampliamente utilizados en el ámbito profesional.
+        Asimismo, se implementaron criterios específicos para el tratamiento
+        del correo electrónico y la contraseña, solicitando sus respectivas
+        confirmaciones únicamente cuando el usuario decide modificar dichos
+        datos.
     </p>
 
-    <p>
-        La estructura implementada permite incorporar futuras mejoras, como
-        la autenticación completa mediante base de datos MySQL, el registro
-        de usuarios, nuevas operaciones dentro del servicio WCF y la integración
-        con otros servicios externos.
-    </p>
+    <h4>Flujo de la operación</h4>
 
+<pre>
+              Usuario
+                 │
+                 ▼
+      Consulta un ID existente
+                 │
+                 ▼
+     Formulario con información
+                 │
+                 ▼
+     Modificar uno o varios datos
+                 │
+                 ▼
+      Ejecutar validaciones
+                 │
+                 ▼
+ ¿Existen cambios por actualizar?
 
-</main>
+      ┌───────────────┐
+      │      No       │
+      └───────────────┘
+                 │
+                 ▼
+ Mostrar mensaje:
+"No se detectaron cambios para actualizar."
 
+                 │
+      ┌───────────────┐
+      │      Sí       │
+      └───────────────┘
+                 │
+                 ▼
+ Actualizar únicamente la
+ información correspondiente
+                 │
+                 ▼
+ Actualizar la base de datos
+                 │
+                 ▼
+ Actualizar la tabla de usuarios
+</pre>
+
+    <h4>Validaciones implementadas</h4>
+
+    <ul>
+
+        <li>Validar que el ID haya sido capturado.</li>
+
+        <li>Verificar que el ID sea mayor que cero.</li>
+
+        <li>Confirmar la existencia del usuario.</li>
+
+        <li>Permitir modificaciones parciales del registro.</li>
+
+        <li>Conservar la información existente cuando un campo permanece vacío.</li>
+
+        <li>Detectar modificaciones realizadas sobre el correo electrónico.</li>
+
+        <li>Solicitar la confirmación del correo únicamente cuando éste cambia.</li>
+
+        <li>Conservar la contraseña almacenada cuando el usuario no desea modificarla.</li>
+
+        <li>Solicitar la confirmación de la contraseña únicamente cuando ésta cambia.</li>
+
+        <li>Actualizar únicamente la información correspondiente.</li>
+
+        <li>Mostrar un mensaje cuando no se detectan cambios en el registro.</li>
+
+        <li>Actualizar automáticamente la tabla de usuarios.</li>
+
+    </ul>
+
+    <h4>Decisiones de diseño</h4>
+
+    <ul>
+
+        <li>
+            La operación siempre inicia después de realizar una consulta
+            correcta del usuario.
+        </li>
+
+        <li>
+            La contraseña nunca es mostrada en el formulario por motivos
+            de seguridad.
+        </li>
+
+        <li>
+            El correo electrónico sí es mostrado, ya que forma parte de la
+            información visible del usuario y puede ser modificado cuando sea
+            necesario.
+        </li>
+
+        <li>
+            Las confirmaciones del correo electrónico y de la contraseña
+            permanecen vacías hasta que el usuario decide modificar dichos
+            datos.
+        </li>
+
+        <li>
+            Cuando un campo permanece vacío, el sistema conserva el valor
+            almacenado previamente en la base de datos, evitando pérdidas
+            accidentales de información.
+        </li>
+
+        <li>
+            Si el usuario no realiza modificaciones, el sistema evita ejecutar
+            una actualización innecesaria e informa que no se detectaron
+            cambios en el registro.
+        </li>
+
+    </ul>
+
+    <hr />
