@@ -250,18 +250,39 @@ namespace ProyectoPerritosWCF.Data
             ConexionBD conexionBD =
                 new ConexionBD();
 
-            // Consulta SQL para actualizar un usuario.
-            string consulta =
-                "UPDATE tbl_usuarios_jmmm " +
-                "SET " +
-                "NOMBRE = @nombre, " +
-                "APELLIDO_PATERNO = @apellidoPaterno, " +
-                "APELLIDO_MATERNO = @apellidoMaterno, " +
-                "EDAD = @edad, " +
-                "GENERO = @genero, " +
-                "EMAIL = @email, " +
-                "PASSWORD = @password " +
-                "WHERE ID_USUARIO = @idUsuario";
+            // Consulta SQL que se ejecutará.
+            string consulta;
+
+            // Determinar si también se actualizará la contraseña.
+            if (string.IsNullOrWhiteSpace(usuario.PASSWORD))
+            {
+                // Actualizar únicamente los datos generales.
+                consulta =
+                    "UPDATE tbl_usuarios_jmmm " +
+                    "SET " +
+                    "NOMBRE = @nombre, " +
+                    "APELLIDO_PATERNO = @apellidoPaterno, " +
+                    "APELLIDO_MATERNO = @apellidoMaterno, " +
+                    "EDAD = @edad, " +
+                    "GENERO = @genero, " +
+                    "EMAIL = @email " +
+                    "WHERE ID_USUARIO = @idUsuario";
+            }
+            else
+            {
+                // Actualizar también la contraseña.
+                consulta =
+                    "UPDATE tbl_usuarios_jmmm " +
+                    "SET " +
+                    "NOMBRE = @nombre, " +
+                    "APELLIDO_PATERNO = @apellidoPaterno, " +
+                    "APELLIDO_MATERNO = @apellidoMaterno, " +
+                    "EDAD = @edad, " +
+                    "GENERO = @genero, " +
+                    "EMAIL = @email, " +
+                    "PASSWORD = @password " +
+                    "WHERE ID_USUARIO = @idUsuario";
+            }
 
             // Crear la conexión utilizando la clase ConexionBD.
             using (MySqlConnection conexion =
@@ -302,9 +323,14 @@ namespace ProyectoPerritosWCF.Data
                     "@email",
                     usuario.EMAIL);
 
-                comando.Parameters.AddWithValue(
-                    "@password",
-                    usuario.PASSWORD);
+                // Enviar la contraseña únicamente
+                // cuando será actualizada.
+                if (!string.IsNullOrWhiteSpace(usuario.PASSWORD))
+                {
+                    comando.Parameters.AddWithValue(
+                        "@password",
+                        usuario.PASSWORD);
+                }
 
                 comando.Parameters.AddWithValue(
                     "@idUsuario",

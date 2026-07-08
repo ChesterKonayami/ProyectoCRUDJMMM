@@ -33,5 +33,17 @@ namespace ProyectoPerritosWCF.Models
 
         // Contraseña.
         public string PASSWORD { get; set; }
+
+       
+        // ====================================
+        // Campos auxiliares del formulario.
+        // No se almacenan en la base de datos.
+        // ====================================
+
+        // Confirmación del correo electrónico.
+        public string CONFIRMAR_EMAIL { get; set; }
+
+        // Confirmación de la contraseña.
+        public string CONFIRMAR_PASSWORD { get; set; }
     }
 }
